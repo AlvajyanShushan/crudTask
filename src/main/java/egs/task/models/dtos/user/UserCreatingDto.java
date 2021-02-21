@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Builder
 public class UserCreatingDto {
     @NotNull
-    private String email;
+    private String emailOrPhone;
     @Size(min = 3, max = 30, message = "First name must be in range 3-30")
     private String firstName;
     @Size(min = 3, max = 30, message = "Last name must be in range 3-30")
