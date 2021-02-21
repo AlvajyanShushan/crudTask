@@ -1,13 +1,16 @@
 package egs.task.controllers;
 
 import egs.task.exceptions.EntityNotFoundException;
-import egs.task.facade.userFacade.UserFacadeBuilder;
+import egs.task.facade.user.UserFacadeBuilder;
 import egs.task.models.ResponseModel;
+import egs.task.models.dtos.user.UserSearchDto;
 import egs.task.utils.Configuration;
 import egs.task.utils.FileUtilForTask;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +45,18 @@ public class UserController extends BaseController {
     @GetMapping("getImage/{filename:.+}")
     public byte[] serveFile(@PathVariable String filename) throws IOException {
         return FileUtilForTask.loadFile(filename, Configuration.USER_IMAGE_DIR_IN_PROJECT, -1, -1);
+    }
+
+    @ApiOperation(value = "Api for admin to get all users.")
+    @PostMapping("getAllUsers/{page}/{size}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseModel getAllUsers(@PathVariable("page") int page, @PathVariable("size") int size,
+                                     @RequestBody UserSearchDto userSearchDto) {
+        try {
+            return createResult(facadeBuilder.getAllUsers(PageRequest.of(page, size, Sort.Direction.DESC, "createdDate"), userSearchDto),
+                    "Users were retrieved successfully.");
+        } catch (Exception e) {
+            return createErrorResult(e);
+        }
     }
 }

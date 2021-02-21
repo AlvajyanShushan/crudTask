@@ -79,10 +79,10 @@ public class CommentController extends BaseController {
     @PostMapping("getAllCommentsByBookId/{page}/{size}")
     @PreAuthorize("hasRole('USER')")
     public ResponseModel getAllCommentsByBookId(@PathVariable("page") int page, @PathVariable("size") int size,
-                                                @RequestParam Long bookId) {
+                                                @RequestParam Long bookId, Authentication authentication) {
         try {
             return createResult(facadeBuilder.getAllCommentsByBookId(PageRequest.of(page, size, Sort.Direction.DESC, "createdDate"),
-                    bookId), "List of comments were retrieved successfully.");
+                    bookId, authentication), "List of comments were retrieved successfully.");
         } catch (EntityNotFoundException e) {
             return createErrorResult(e);
         }
