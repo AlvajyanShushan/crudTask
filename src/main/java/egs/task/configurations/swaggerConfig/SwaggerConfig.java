@@ -23,7 +23,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     public Docket swaggerDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("task.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("egs.task.controllers"))
                 .paths(PathSelectors.any())
                 .build()
                 .securityContexts(Lists.newArrayList(securityContext()))

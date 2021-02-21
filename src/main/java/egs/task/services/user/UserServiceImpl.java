@@ -1,7 +1,6 @@
 package egs.task.services.user;
 
 import egs.task.models.entities.User;
-import egs.task.repositories.RoleRepository;
 import egs.task.repositories.UserRepository;
 import egs.task.services.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,17 +22,11 @@ import java.util.Optional;
 public class UserServiceImpl extends AbstractService<User, UserRepository> implements UserService, UserDetailsService {
     @Lazy
     private final UserRepository userRepository;
-    @Lazy
-    private final RoleRepository roleRepository;
-    @Lazy
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository) {
         super(userRepository);
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override

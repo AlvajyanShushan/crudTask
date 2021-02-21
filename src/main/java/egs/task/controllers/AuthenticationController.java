@@ -116,7 +116,7 @@ public class AuthenticationController extends BaseController {
         try {
             userFacadeBuilder.registration(userCreatingDto, deviceId);
             final Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userCreatingDto.getEmail(), userCreatingDto.getPassword()));
+                    new UsernamePasswordAuthenticationToken(userCreatingDto.getEmailOrPhone(), userCreatingDto.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             final String token = jwtTokenUtil.generateToken(authentication);
             final String roleName = DecodeTokenUtil.getRoleFromToken(token);
