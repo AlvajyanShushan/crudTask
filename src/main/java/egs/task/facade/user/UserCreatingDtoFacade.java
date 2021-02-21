@@ -47,8 +47,8 @@ public class UserCreatingDtoFacade {
     }
 
     public Long registration(UserCreatingDto userCreatingDto, String deviceId) throws EntityNotFoundException {
-        Optional<User> userOptional = userRepository.findByEmailAndHiddenFalse(userCreatingDto.getEmail());
-        Optional<User> userOptionalByPhone = userRepository.findByPhoneNumberAndHiddenFalse(userCreatingDto.getEmail());
+        Optional<User> userOptional = userRepository.findByEmailAndHiddenFalse(userCreatingDto.getEmailOrPhone());
+        Optional<User> userOptionalByPhone = userRepository.findByPhoneNumberAndHiddenFalse(userCreatingDto.getEmailOrPhone());
         if (userOptional.isEmpty() && userOptionalByPhone.isEmpty()) {
             throw new IllegalArgumentException("User not found.");
         } else if (userOptional.isPresent() && userOptional.get().getFirstName() != null && (userOptional.get().getEmail() != null || userOptional.get().getPhoneNumber() != null)) {
