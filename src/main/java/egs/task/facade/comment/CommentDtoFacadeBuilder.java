@@ -46,7 +46,8 @@ public class CommentDtoFacadeBuilder {
         return commentDeletingDtoFacade.deleteComment(id, authentication);
     }
 
-    public Page<CommentPreviewDto> getAllCommentsByBookId(Pageable pageable, Long bookId) throws EntityNotFoundException {
-        return commentPreviewDtoFacade.getAllCommentsByBookId(pageable, bookId);
+    public Page<CommentPreviewDto> getAllCommentsByBookId(Pageable pageable, Long bookId, Authentication authentication)
+            throws EntityNotFoundException {
+        return commentPreviewDtoFacade.getAllCommentsByBookId(pageable, bookId, authentication);
     }
 }

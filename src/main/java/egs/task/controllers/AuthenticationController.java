@@ -3,7 +3,7 @@ package egs.task.controllers;
 import egs.task.configurations.securityConfig.TokenProvider;
 import egs.task.enums.OsTypeEnum;
 import egs.task.exceptions.EntityNotFoundException;
-import egs.task.facade.userFacade.UserFacadeBuilder;
+import egs.task.facade.user.UserFacadeBuilder;
 import egs.task.models.ResponseModel;
 import egs.task.models.dtos.AuthTokenDTO;
 import egs.task.models.dtos.user.*;
@@ -76,9 +76,9 @@ public class AuthenticationController extends BaseController {
                                @RequestHeader(value = "DeviceId", required = false) String deviceId,
                                @ApiParam("LanguageName must be 'en' or 'ru' or 'hy'") @RequestHeader(value = "LanguageName", defaultValue = "hy") String languageName) {
         try {
-            Optional<User> optionalUser = userService.getByUsername(loginUser.getEmail());
+            Optional<User> optionalUser = userService.getByUsername(loginUser.getEmailOrPhone());
             final Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginUser.getEmail(), loginUser.getPassword()));
+                    new UsernamePasswordAuthenticationToken(loginUser.getEmailOrPhone(), loginUser.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             final String token = jwtTokenUtil.generateToken(authentication);
             final String roleName = DecodeTokenUtil.getRoleFromToken(token);

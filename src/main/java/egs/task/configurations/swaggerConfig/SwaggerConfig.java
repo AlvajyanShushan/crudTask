@@ -23,7 +23,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     public Docket swaggerDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("egs.task.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("task.controllers"))
                 .paths(PathSelectors.any())
                 .build()
                 .securityContexts(Lists.newArrayList(securityContext()))
@@ -34,7 +34,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
                 .title("REST API")
-                .description("REST API for EGS task")
+                .description("REST API for task")
                 .version("0.0.1")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
